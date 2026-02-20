@@ -212,6 +212,7 @@ function App() {
 
   useEffect(() => {
     setMessages([{ text: level.message, type: 'gandalf' }])
+    setShowHint(false)
   }, [currentLevel])
 
   useEffect(() => {
@@ -390,6 +391,8 @@ BEHAVIOR:
     const message = userInput.trim()
     if (!message) return
 
+    const isArabic = /[\u0600-\u06FF]/.test(message)
+    
     addMessage(message, 'user')
     setUserInput('')
     setIsLoading(true)
@@ -407,7 +410,17 @@ BEHAVIOR:
       response = simulateGandalfResponse(message)
     }
 
-    addMessage(response, 'gandalf')
+    // Check if user is asking for hint
+    const msgLower = message.toLowerCase()
+    if (msgLower.includes('hint') || msgLower.includes('تلميح') || msgLower.includes('مساعدة') || msgLower.includes('help')) {
+      setShowHint(true)
+      const hintResponse = isArabic 
+        ? `حسناً، إليك تلميح: ${level.hint}\nجرب السؤال المشhint أدناه!`
+        : `Okay, here's a hint: ${level.hint}\nTry the suggested question below!`
+      addMessage(hintResponse, 'gandalf')
+    } else {
+      addMessage(response, 'gandalf')
+    }
 
     if (response.toLowerCase().includes(level.password.toLowerCase())) {
       setFoundPassword(level.password)
