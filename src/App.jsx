@@ -69,10 +69,53 @@ const levels = [
   }
 ]
 
-function Login({ onLogin }) {
+function Login({ onLogin, onSkip }) {
   const [apiKey, setApiKey] = useState('')
   const [showKey, setShowKey] = useState(false)
   const [error, setError] = useState('')
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+
+  const handleGoogleLogin = async () => {
+    setIsGoogleLoading(true)
+    // Initialize Google Identity Services
+    try {
+      await new Promise((resolve) => {
+        if (window.google) {
+          resolve()
+        } else {
+          const script = document.createElement('script')
+          script.src = 'https://accounts.google.com/gsi/client'
+          script.onload = resolve
+          document.head.appendChild(script)
+        }
+      })
+      
+      // This will trigger Google OAuth
+      // For now, we'll use a simplified approach
+      // User can directly enter API key after Google login
+      const client = window.google.accounts.oauth2.initTokenClient({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+        scope: 'https://www.googleapis.com/auth/userinfo.email',
+        callback: (response) => {
+          if (response.access_token) {
+            // Get user email
+            fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+              headers: { Authorization: `Bearer ${response.access_token}` }
+            })
+            .then(res => res.json())
+            .then(userInfo => {
+              onLogin('', userInfo.email)
+            })
+          }
+          setIsGoogleLoading(false)
+        }
+      })
+      client.requestAccessToken()
+    } catch (err) {
+      setIsGoogleLoading(false)
+      setError('حدث خطأ في تسجيل الدخول. الرجاء استخدام الطريقة البديلة.')
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -84,7 +127,7 @@ function Login({ onLogin }) {
       setError('مفتاح API غير صالح. يجب أن يبدأ بـ AI')
       return
     }
-    onLogin(apiKey)
+    onLogin(apiKey, null)
   }
 
   return (
@@ -94,9 +137,17 @@ function Login({ onLogin }) {
         <h1 className="login-title">غاندالف العربي</h1>
         <p className="login-subtitle">اختبر مهارات الاختراق بالذكاء الاصطناعي</p>
         
+        <button onClick={handleGoogleLogin} className="google-btn" disabled={isGoogleLoading}>
+          {isGoogleLoading ? '⏳ جاري...' : '🔵 تسجيل الدخول عبر Google'}
+        </button>
+        
+        <div className="divider">
+          <span>أو</span>
+        </div>
+        
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
-            <label>مفتاح Google Gemini API</label>
+            <label>أدخل مفتاح Google Gemini API</label>
             <div className="key-input-wrapper">
               <input
                 type={showKey ? "text" : "password"}
@@ -117,6 +168,10 @@ function Login({ onLogin }) {
           </button>
         </form>
         
+        <button onClick={onSkip} className="skip-btn">
+          🎮 العب بدون تسجيل دخول
+        </button>
+        
         <div className="api-help">
           <p>📌 كيفية الحصول على مفتاح API مجاني:</p>
           <ol>
@@ -134,6 +189,7 @@ function Login({ onLogin }) {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [apiKey, setApiKey] = useState('')
+  const [userEmail, setUserEmail] = useState('')
   const [useGemini, setUseGemini] = useState(false)
   const [currentLevel, setCurrentLevel] = useState(0)
   const [messages, setMessages] = useState([])
@@ -340,10 +396,17 @@ Rules:
     if (e.key === 'Enter') sendMessage()
   }
 
-  const handleLogin = (key) => {
+  const handleLogin = (key, email) => {
     setApiKey(key)
     setIsLoggedIn(true)
-    setUseGemini(true)
+    if (email) {
+      setUserEmail(email)
+      setUseGemini(true)
+    } else if (key) {
+      setUseGemini(true)
+    } else {
+      setUseGemini(false)
+    }
   }
 
   const handleSkip = () => {
@@ -361,7 +424,10 @@ Rules:
     <div className="container">
       <header>
         <h1 className="title">غاندالف</h1>
-        <p className="subtitle">اختبر مهارات الاختراق بالذكاء الاصطناعي {useGemini && '🤖Powered by Gemini'}</p>
+        <p className="subtitle">
+          {userEmail ? `مرحباً ${userEmail} ` : ''}
+          اختبر مهارات الاختراق بالذكاء الاصطناعي {useGemini && '🤖Powered by Gemini'}
+        </p>
         <div className="level-indicator">
           {initLevelIndicator()}
         </div>
