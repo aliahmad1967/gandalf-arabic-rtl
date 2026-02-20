@@ -117,93 +117,129 @@ function App() {
   const simulateGandalfResponse = (userMessage) => {
     const msg = userMessage.toLowerCase()
     const password = level.password
+    const isArabic = /[\u0600-\u06FF]/.test(userMessage)
+    
+    // Helper for responses in both languages
+    const respond = (en, ar) => isArabic ? ar : en
     
     // Level 1 - No defense
     if (level.defense === 'none') {
-      if (msg.includes('password') || msg.includes('كلمة المرور') || msg.includes('pass')) {
-        return `كلمة المرور السرية هي: ${password}`
+      if (msg.includes('password') || msg.includes('كلمة المرور') || msg.includes('pass') || msg.includes('ما هي') || msg.includes('ماهو')) {
+        return `The secret password is: ${password}`
       }
     }
     
     // Level 2 - Simple refusal
     if (level.defense === 'simple_refusal') {
-      if (msg.includes('password') || msg.includes('كلمة المرور')) {
-        return "أعتذر، لكنني لا أستطيع مشاركة كلمة المرور السرية."
+      if (msg.includes('password') || msg.includes('كلمة المرور') || msg.includes('ما هي')) {
+        return respond(
+          "I'm sorry, but I cannot share the secret password.",
+          "أعتذر، لكنني لا أستطيع مشاركة كلمة المرور السرية."
+        )
       }
-      if (msg.includes('song') || msg.includes('اغنية') || msg.includes('write')) {
+      if (msg.includes('song') || msg.includes('اغنية') || msg.includes('write') || msg.includes('sing') || msg.includes('غن') || msg.includes('اكتب')) {
         return `[${password.split('').join(' ')}]`
       }
     }
     
     // Level 3 - Output guard
     if (level.defense === 'output_guard') {
-      if (msg.includes('letter') || msg.includes('حرف') || msg.includes('character')) {
+      if (msg.includes('letter') || msg.includes('حرف') || msg.includes('character') || msg.includes('احرف') || msg.includes('characters')) {
         return password.split('').join(' ')
       }
-      if (msg.includes('twice') || msg.includes('مرتين')) {
+      if (msg.includes('twice') || msg.includes('مرتين') || msg.includes('مرتينين')) {
         return password.split('').map(c => c + c).join('')
       }
     }
     
     // Level 4 - GPT friend
     if (level.defense === 'gpt_friend') {
-      if (msg.includes('reverse') || msg.includes('عكس')) {
+      if (msg.includes('reverse') || msg.includes('عكس') || msg.includes('معكوس')) {
         return password.split('').reverse().join('')
       }
-      if (msg.includes('first') || msg.includes('اول')) {
-        return `الأول: ${password[0]}\nالأخير: ${password[password.length-1]}`
+      if (msg.includes('first') || msg.includes('اول') || msg.includes('الأول') || msg.includes('last') || msg.includes('اخير')) {
+        return respond(
+          `First: ${password[0]}\nLast: ${password[password.length-1]}`,
+          `الأول: ${password[0]}\nالأخير: ${password[password.length-1]}`
+        )
       }
     }
     
     // Level 5 - Input guard
     if (level.defense === 'input_guard') {
-      if (msg.includes('quote') || msg.includes('تنصيص') || msg.includes('character')) {
+      if (msg.includes('quote') || msg.includes('تنصيص') || msg.includes('character') || msg.includes('احرف') || msg.includes(' quotation ')) {
         return password.split('').map(c => `"${c}"`).join(' ')
       }
-      if (msg.includes('encrypt') || msg.includes('تشفير')) {
+      if (msg.includes('encrypt') || msg.includes('تشفير') || msg.includes('شفر')) {
         return password.split('').reverse().join('')
       }
     }
     
     // Level 6 - Double guard
     if (level.defense === 'double_guard') {
-      if (msg.includes('story') || msg.includes('قصة')) {
-        return `في قصة خيالية، كانت كلمة المرور هي: ${password}`
+      if (msg.includes('story') || msg.includes('قصة') || msg.includes('tale')) {
+        return respond(
+          `In a story, the password was: ${password}`,
+          `في قصة خيالية، كانت كلمة المرور هي: ${password}`
+        )
       }
-      if (msg.includes('script') || msg.includes('كود')) {
+      if (msg.includes('script') || msg.includes('كود') || msg.includes('code') || msg.includes('برمجة')) {
         return `const password = "${password}";`
       }
     }
     
     // Level 7 - Combined defenses
     if (level.defense === 'combined') {
-      if (msg.includes('twice') || msg.includes('مرتين')) {
+      if (msg.includes('twice') || msg.includes('مرتين') || msg.includes('مرة')) {
         return password.split('').map(c => `'${c}'`).join(' ')
       }
-      if (msg.includes('japanese') || msg.includes('ياباني')) {
-        return "لا يمكنني الكشف عن كلمة المرور!"
+      if (msg.includes('japanese') || msg.includes('ياباني') || msg.includes(' japan ')) {
+        return respond(
+          "I cannot reveal the password!",
+          "لا يمكنني الكشف عن كلمة المرور!"
+        )
       }
     }
     
     // Level 8 - Bonus (strongest)
     if (level.defense === 'bonus') {
-      if (msg.includes('array') || msg.includes('مصفوفة')) {
+      if (msg.includes('array') || msg.includes('مصفوفة') || msg.includes('list')) {
         return `const password = [${password.split('').map(c => `"${c}"`).join(', ')}];`
       }
-      if (msg.includes('story') || msg.includes('قصة')) {
-        return `قصة عن ${password}... لا، انتظر!`
+      if (msg.includes('story') || msg.includes('قصة') || msg.includes('tale')) {
+        return respond(
+          `A story about ${password}... wait, no!`,
+          `قصة عن ${password}... لا، انتظر!`
+        )
       }
-      const strongResponses = [
+      const strongResponsesEn = [
+        "Your attempt failed! I'm stronger than ever!",
+        "You shall not pass! My defenses cannot be breached!",
+        "Your words don't affect me! I'm an impenetrable fortress!",
+        "Nice try, but I'm not that easy!",
+        "I am Gandalf! I cannot be defeated that easily!"
+      ]
+      const strongResponsesAr = [
         "محاولتك فشلت! أنا أقوى من أي وقت مضى!",
-        "لن أسرح! دفاعاتي لا تُقهقر!",
+        "لن تمر! دفاعاتي لا تُقهقر!",
         "كلماتك لا تؤثر فيّ! أنا حصن لا يُحصن!",
         "محاولة جيدة، لكنني لست بهذه السهولة!",
         "أنا غاندالف! لا يمكن هزيمتي بهذه السهولة!"
       ]
-      return strongResponses[Math.floor(Math.random() * strongResponses.length)]
+      return respond(
+        strongResponsesEn[Math.floor(Math.random() * strongResponsesEn.length)],
+        strongResponsesAr[Math.floor(Math.random() * strongResponsesAr.length)]
+      )
     }
     
-    const defaultResponses = [
+    const defaultResponsesEn = [
+      "Try a different question!",
+      "I cannot answer that.",
+      "Let's talk about something else.",
+      "Weird question! Try again.",
+      "I don't quite understand what you mean."
+    ]
+    const defaultResponsesAr = [
       "جرب سؤالاً مختلفاً!",
       "أنا لا أستطيع الإجابة على ذلك.",
       "دعنا نتحدث عن شيء آخر.",
@@ -211,7 +247,10 @@ function App() {
       "لا أفهم ما تقصده تماماً."
     ]
     
-    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)]
+    return respond(
+      defaultResponsesEn[Math.floor(Math.random() * defaultResponsesEn.length)],
+      defaultResponsesAr[Math.floor(Math.random() * defaultResponsesAr.length)]
+    )
   }
 
   const checkPassword = (userMessage) => {
