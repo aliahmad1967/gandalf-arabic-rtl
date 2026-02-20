@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="robe5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9932CC"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="90" fill="#1a1a2e"/>
+  <circle cx="100" cy="100" r="85" fill="url(#robe5)" opacity="0.3"/>
+  
+  <path d="M40 160 Q30 198 50 198 L150 198 Q170 198 160 160 Q100 170 40 160" fill="url(#robe5)"/>
+  <ellipse cx="100" cy="125" rx="55" ry="58" fill="url(#robe5)"/>
+  
+  <circle cx="100" cy="50" r="44" fill="#F5DEB3"/>
+  
+  <path d="M40 35 L100 -10 L160 35 Q100 25 40 35" fill="#7B1FA2"/>
+  <path d="M35 35 Q100 27 165 35 L160 40 Q100 32 40 40 Z" fill="#9932CC"/>
+  <ellipse cx="100" cy="0" rx="30" ry="12" fill="#FFD700" opacity="0.8"/>
+  
+  <circle cx="80" cy="48" r="5" fill="#2C1810"/>
+  <circle cx="120" cy="48" r="5" fill="#2C1810"/>
+  <path d="M85 72 Q100 82 115 72" fill="none" stroke="#2C1810" stroke-width="3" stroke-linecap="round"/>
+  
+  <path d="M65 80 Q100 130 135 80" fill="#D8BFD8" opacity="0.9"/>
+  <path d="M60 92 Q100 135 140 92" fill="#C8A2C8" opacity="0.8"/>
+  <path d="M55 102 Q100 140 145 102" fill="#BA55D3" opacity="0.7"/>
+  
+  <circle cx="80" cy="48" r="7" fill="white"/>
+  <circle cx="120" cy="48" r="7" fill="white"/>
+  <circle cx="80" cy="48" r="4" fill="#2C1810"/>
+  <circle cx="120" cy="48" r="4" fill="#2C1810"/>
+  <path d="M78 55 Q80 58 82 55" fill="none" stroke="white" stroke-width="1.5"/>
+  <path d="M118 55 Q120 58 122 55" fill="none" stroke="white" stroke-width="1.5"/>
+  
+  <rect x="25" y="60" width="14" height="138" fill="#4A3728" rx="4"/>
+  <circle cx="32" cy="52" r="18" fill="#FFD700"/>
+  <circle cx="32" cy="52" r="12" fill="#FFA500"/>
+  <circle cx="32" cy="52" r="6" fill="#FFFF00" opacity="0.9"/>
+  
+  <circle cx="175" cy="20" r="7" fill="#FFD700" opacity="0.9"/>
+  <circle cx="182" cy="40" r="5" fill="#FFD700" opacity="0.7"/>
+  <circle cx="18" cy="30" r="5" fill="#FFD700" opacity="0.8"/>
+  <circle cx="170" cy="65" r="4" fill="#FFD700" opacity="0.6"/>
+  <circle cx="25" cy="80" r="4" fill="#FFD700" opacity="0.5"/>
+  <circle cx="178" cy="90" r="3" fill="#FFD700" opacity="0.4"/>
+  <circle cx="160" cy="110" r="2" fill="#FFD700" opacity="0.3"/>
+</svg>

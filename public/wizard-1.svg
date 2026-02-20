@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="robe1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6B5B95"/>
+      <stop offset="100%" stop-color="#4A3F6B"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <circle cx="100" cy="100" r="90" fill="#1a1a2e"/>
+  <circle cx="100" cy="100" r="85" fill="url(#robe1)" opacity="0.3"/>
+  
+  <!-- Robe -->
+  <path d="M60 140 Q50 180 70 195 L130 195 Q150 180 140 140 Q100 150 60 140" fill="url(#robe1)"/>
+  
+  <!-- Body -->
+  <ellipse cx="100" cy="130" rx="35" ry="40" fill="url(#robe1)"/>
+  
+  <!-- Head -->
+  <circle cx="100" cy="70" r="35" fill="#F5DEB3"/>
+  
+  <!-- Hat -->
+  <path d="M60 55 L100 10 L140 55 Q100 45 60 55" fill="#4A3F6B"/>
+  <path d="M55 55 Q100 48 145 55 L140 60 Q100 53 60 60 Z" fill="#6B5B95"/>
+  
+  <!-- Face -->
+  <circle cx="88" cy="68" r="4" fill="#2C1810"/>
+  <circle cx="112" cy="68" r="4" fill="#2C1810"/>
+  <path d="M90 82 Q100 90 110 82" fill="none" stroke="#2C1810" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Beard (small) -->
+  <path d="M85 90 Q100 110 115 90" fill="#E8E8E8" opacity="0.8"/>
+  
+  <!-- Eyes - innocent young look -->
+  <circle cx="88" cy="68" r="6" fill="white"/>
+  <circle cx="112" cy="68" r="6" fill="white"/>
+  <circle cx="88" cy="68" r="3" fill="#2C1810"/>
+  <circle cx="112" cy="68" r="3" fill="#2C1810"/>
+  
+  <!-- Staff -->
+  <rect x="45" y="80" width="6" height="115" fill="#8B4513" rx="2"/>
+  <circle cx="48" cy="75" r="10" fill="#FFD700"/>
+  <circle cx="48" cy="75" r="6" fill="#FFA500"/>
+  
+  <!-- Sparkles -->
+  <circle cx="155" cy="40" r="3" fill="#FFD700" opacity="0.8"/>
+  <circle cx="165" cy="60" r="2" fill="#FFD700" opacity="0.6"/>
+  <circle cx="35" cy="50" r="2" fill="#FFD700" opacity="0.7"/>
+</svg>
