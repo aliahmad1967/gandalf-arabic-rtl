@@ -611,6 +611,41 @@ input[type="text"]::placeholder {
   text-decoration: underline;
 }
 
+/* Hint Questions Styles */
+.hint-questions {
+  padding: 15px 20px;
+  background: rgba(212, 175, 55, 0.1);
+  border-bottom: 1px solid var(--border-gold);
+}
+
+.hint-questions p {
+  color: var(--gold-light);
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.hint-questions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hint-question-btn {
+  background: rgba(123, 44, 191, 0.2);
+  border: 1px solid rgba(123, 44, 191, 0.4);
+  border-radius: 20px;
+  padding: 8px 14px;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hint-question-btn:hover {
+  background: rgba(123, 44, 191, 0.4);
+  transform: scale(1.05);
+}
+
 /* Google Login Button */
 .google-btn {
   width: 100%;
